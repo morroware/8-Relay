@@ -897,7 +897,8 @@ def health_check():
     health_status = {
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
-        'uptime': time.process_time(),
+        # Use wall clock time instead of CPU process time for uptime
+        'uptime': (datetime.now() - stats['start_time']).total_seconds(),
         'gpio_initialized': len(initialized_pins) > 0,
         'errors_last_minute': 0  # Could implement rolling error count
     }
